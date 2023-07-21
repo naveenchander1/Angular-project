@@ -1,0 +1,13 @@
+<section style="text-align: left;">
+<div *ngFor="let data of answers">
+    <h4 [innerHTML]="data.question"></h4>
+    <div *ngFor="let option of data.options; let i = index">
+        <label [for]="i">
+            {{option.label}}
+            <input [name]="data.correct_answer" [value]="option.value" type="radio" [id]="i" [(ngModel)]="data.selected">
+        </label>
+    </div>
+</div>
+</section>
+
+<button (click)="show()"></button>

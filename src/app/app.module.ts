@@ -3,19 +3,28 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestService } from './services/test.service';
 import { HttpClientModule } from '@angular/common/http';
+import { QuizFormComponent } from './quiz-form/quiz-form.component';
+import { QuizAnswersComponent } from './quiz-answers/quiz-answers.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { QuizService } from './core/services/quiz.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    QuizFormComponent,
+    QuizAnswersComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [TestService],
-  bootstrap: [AppComponent]
+  providers: [QuizService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
