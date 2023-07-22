@@ -3,8 +3,9 @@
 <app-quiz #quiz *ngIf="isQuizVisible" [answers]="answers" [isAnswers]="true"></app-quiz>
 </section>
 
-<button (click)="submitAnswers()">Submit</button>
+<button *ngIf="isSubmitBtnEnabled" (click)="submitAnswers()" class="btn btn-form">Submit</button>
 
+<!-- [disabled]="!isSubmitBtnEnabled" -->
 <!-- <div *ngFor="let data of answers; let parentIndex = index" class="answers">
     <h4 [innerHTML]="data.question"></h4>
     <div *ngFor="let option of data.options; let childIndex = index">

@@ -1,5 +1,11 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
-import { Answers, Option, Questions } from '../core/models/quiz-form.interface';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { Answers, Questions } from '../core/models/quiz-form.interface';
 import { QuizComponent } from '../quiz/quiz.component';
 import { QuizService } from '../core/services/quiz.service';
 import { Router } from '@angular/router';
@@ -14,11 +20,11 @@ export class QuizAnswersComponent {
   @Input() questions: Array<Questions> = [];
   answers: Array<Answers> = []; //TO-DO INTERFACE
   isQuizVisible: boolean = false;
+  isSubmitBtnEnabled: boolean = false;
 
   constructor(private quizService: QuizService, private router: Router) {}
 
   ngOnInit() {
-    this.answers = this.createAnswers(this.questions);
     this.isQuizVisible = true;
     console.log(this.answers);
   }
@@ -49,5 +55,17 @@ export class QuizAnswersComponent {
     console.log('quiz', this.quiz);
     this.quizService.setQuizData(this.quiz.answers);
     this.router.navigate(['result']);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.hasOwnProperty('questions')) {
+      this.answers = this.createAnswers(this.questions);
+    }
+  }
+
+  ngAfterViewInit() {
+    this.quiz.quizForm.form.statusChanges.subscribe((status) => {
+      this.isSubmitBtnEnabled = status == 'VALID' ? true : false;
+    });
   }
 }

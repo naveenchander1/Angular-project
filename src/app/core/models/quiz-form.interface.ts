@@ -27,6 +27,7 @@ export interface Answers extends Questions {
   options?: Array<Option> | undefined;
   isCorrectAnswer?: boolean | null;
   selected?: string | null;
+  ddd?: null;
 }
 
 export interface Option {
