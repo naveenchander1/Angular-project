@@ -17,8 +17,4 @@ export class QuizComponent {
     options.map((option: Option) => (option.isChecked = false));
     options[index].isChecked = true;
   }
-
-  ngAfterViewInit() {
-    console.log(this.quizForm);
-  }
 }

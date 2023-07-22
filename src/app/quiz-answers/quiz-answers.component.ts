@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { Answers, Questions } from '../core/models/quiz-form.interface';
 import { QuizComponent } from '../quiz/quiz.component';
 import { QuizService } from '../core/services/quiz.service';
@@ -18,7 +12,7 @@ import { Router } from '@angular/router';
 export class QuizAnswersComponent {
   @ViewChild(QuizComponent) quiz!: QuizComponent;
   @Input() questions: Array<Questions> = [];
-  answers: Array<Answers> = []; //TO-DO INTERFACE
+  answers: Array<Answers> = [];
   isQuizVisible: boolean = false;
   isSubmitBtnEnabled: boolean = false;
 
@@ -26,13 +20,12 @@ export class QuizAnswersComponent {
 
   ngOnInit() {
     this.isQuizVisible = true;
-    console.log(this.answers);
   }
 
   createAnswers(questions: Array<Questions>): Array<Answers> {
     let data: Array<Answers> = [];
     questions.map((que: Answers) => {
-      let questions = { ...que }; //TO-DO CRATE A CLASS
+      let questions = { ...que };
       questions['isCorrectAnswer'] = null;
       questions['options'] = [];
       questions['selected'] = null;
@@ -45,14 +38,12 @@ export class QuizAnswersComponent {
           isChecked: false,
         });
       });
-      //questions.options?.push(que.correct_answer, ...que.incorrect_answers);
       data.push(questions);
     });
     return data;
   }
 
   submitAnswers() {
-    console.log('quiz', this.quiz);
     this.quizService.setQuizData(this.quiz.answers);
     this.router.navigate(['result']);
   }
