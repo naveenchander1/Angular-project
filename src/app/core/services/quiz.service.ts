@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Category, Quiz, Result } from '../models/quiz-form.interface';
+import { Answers, Category, Quiz, Result } from '../models/quiz-form.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuizService {
   constructor(private http: HttpClient) {}
+  private answers: Array<Answers> = [];
 
   getCategories() {
     const categoryUrl = 'https://opentdb.com/api_category.php';
@@ -21,5 +22,14 @@ export class QuizService {
       .append('difficulty', params.difficulty)
       .append('type', params.type);
     return this.http.get<Result>(questionsUrl, { params: queryParams });
+  }
+
+  setQuizData(data: Array<Answers>) {
+    console.log('setQuizData', data);
+    this.answers = data;
+  }
+
+  getQuizData() {
+    return this.answers;
   }
 }

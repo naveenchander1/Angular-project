@@ -1,0 +1,14 @@
+@use '../../styles/variables' as var;
+.selected {
+    background: var.$green;
+}
+.answers {
+    label {
+        &.incorrect-answer {
+            background: var.$red;
+        }
+        &:hover {
+            background: var.$green;
+        }
+    }
+}

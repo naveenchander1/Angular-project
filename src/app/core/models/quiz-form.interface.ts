@@ -24,13 +24,14 @@ export interface Questions {
 }
 
 export interface Answers extends Questions {
-  options?: Array<option>;
-  isCorrectAnswer?: boolean;
+  options?: Array<Option> | undefined;
+  isCorrectAnswer?: boolean | null;
   selected?: string | null;
 }
 
-export interface option {
+export interface Option {
   label: string;
   value: string | number;
   isChecked: boolean;
+  isIncorrectAnswer?: boolean | null;
 }

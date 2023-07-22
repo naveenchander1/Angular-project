@@ -17,7 +17,7 @@ export class QuizFormComponent implements OnInit, OnDestroy {
     private quizService: QuizService
   ) {}
 
-  subscription: Subscription = new Subscription();
+  private subscriptions: Subscription[] = [];
   categoryList: Array<Category> = [];
   levelList: Array<string> = [];
   quizForm = this.fb.group({
@@ -28,16 +28,20 @@ export class QuizFormComponent implements OnInit, OnDestroy {
   questions: Array<Questions> = [];
 
   ngOnInit() {
-    this.subscription = this.activatedRoute.data.subscribe((data) => {
-      console.log(data);
-      this.categoryList = data['routeResolver'].trivia_categories;
-    });
+    this.subscriptions.push(
+      this.activatedRoute.data.subscribe((data) => {
+        console.log(data);
+        this.categoryList = data['routeResolver'].trivia_categories;
+      })
+    );
 
     this.levelList = ['easy', 'medium', 'hard'];
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
   selectCategory() {}
@@ -50,15 +54,17 @@ export class QuizFormComponent implements OnInit, OnDestroy {
       difficulty: formValue.difficulty,
       type: 'multiple',
     };
-    this.quizService.getQuestions(params).subscribe({
-      next: (data) => {
-        console.log('data', data);
-        this.quizAnswersVisible = true;
-        this.questions = data.results;
-      },
-      error: (err) => {
-        console.log('err', err);
-      },
-    });
+    this.subscriptions.push(
+      this.quizService.getQuestions(params).subscribe({
+        next: (data) => {
+          console.log('data', data);
+          this.quizAnswersVisible = true;
+          this.questions = data.results;
+        },
+        error: (err) => {
+          console.log('err', err);
+        },
+      })
+    );
   }
 }

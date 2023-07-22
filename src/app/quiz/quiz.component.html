@@ -1,0 +1,20 @@
+<section style="text-align: left;">
+    <div *ngFor="let data of answers; let parentIndex = index" class="answers">
+        <h4 [innerHTML]="data.question"></h4>
+        <div *ngFor="let option of data.options; let childIndex = index">
+            <div *ngIf="isAnswers; else isResult">
+                <label for="{{'option-'+parentIndex+childIndex}}" [ngClass]="{'selected': option.isChecked}">
+                    {{option.label}}
+                    <input (change)="select(childIndex, data.options)" [name]="data.correct_answer" [value]="option.label" type="radio" id="{{'option-'+parentIndex+childIndex}}" [(ngModel)]="data.selected">
+                </label>
+            </div>
+            
+            <ng-template #isResult>
+                <label for="{{'option-'+parentIndex+childIndex}}" [ngClass]="{'selected': option.isChecked, 'incorrect-answer': option.isIncorrectAnswer}">
+                    {{option.label}}
+                    <input (change)="select(childIndex, data.options)" [name]="data.correct_answer" [value]="option.label" type="radio" id="{{'option-'+parentIndex+childIndex}}" [(ngModel)]="data.selected">
+                </label>
+              </ng-template>
+        </div>
+    </div>
+    </section>
